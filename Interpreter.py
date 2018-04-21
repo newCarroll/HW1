@@ -74,7 +74,7 @@ def div_by_quotes(tokens_list, text):
 class Interpreter(object):
 
     def __init__(self):
-        self.pipe_parser = pp.PipeParser()
+        self.__pipe_parser = pp.PipeParser()
 
     class Stream(object):
         """
@@ -96,7 +96,7 @@ class Interpreter(object):
         :param text:
         """
         try:
-            self.pipes_list = div_by_quotes([[]], text)
+            self.__pipes_list = div_by_quotes([[]], text)
         except Exception:
             raise Exception
 
@@ -108,9 +108,9 @@ class Interpreter(object):
         :return результат всего пайплайна
         """
         input_stream = self.Stream()
-        for part_pipe in self.pipes_list:
+        for part_pipe in self.__pipes_list:
             try:
-                input_stream = self.pipe_parser.parse(part_pipe, input_stream)
+                input_stream = self.__pipe_parser.parse(part_pipe, input_stream)
             except Exception:
                 return
 

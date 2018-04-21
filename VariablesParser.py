@@ -9,7 +9,7 @@ class VarParser:
     """
 
     def __init__(self):
-        self.variables = {}
+        self.__variables = {}
 
     def parse(self, command):
         """
@@ -26,7 +26,7 @@ class VarParser:
                 raise Exception
         else:
             value = command[0].text[eq_index+1:]
-        self.variables[var] = value
+        self.__variables[var] = value
 
     def set_values(self, tokens):
         """
@@ -38,10 +38,10 @@ class VarParser:
             if token.quot == 'QUOTING':
                 token.text = token.text
             else:
-                token.text = self.give_value(token.text)
+                token.text = self.__give_value(token.text)
         return tokens
 
-    def give_value(self, text):
+    def __give_value(self, text):
         """
         :param text: текст из одного токена
         :return: заменяет перменные в тексте их значениямм
@@ -55,7 +55,7 @@ class VarParser:
                 index_b = i
             elif c in split_symbols and index_b != -1:
                 index_e = i
-                value = self.substitution_var(text[index_b + 1:index_e])
+                value = self.__substitution_var(text[index_b + 1:index_e])
                 new_text += value
                 new_text += c
                 index_b = -1
@@ -63,16 +63,16 @@ class VarParser:
                 new_text += c
 
         if index_b != -1:
-            value = self.substitution_var(text[index_b + 1:])
+            value = self.__substitution_var(text[index_b + 1:])
             new_text += value
         return new_text
 
-    def substitution_var(self, word):
+    def __substitution_var(self, word):
         """
         выполняет подстановку значения в переменную
         :param word: переменная
         :return: значение
         """
-        if word in self.variables.keys():
-            return self.variables[word]
+        if word in self.__variables.keys():
+            return self.__variables[word]
         return ''

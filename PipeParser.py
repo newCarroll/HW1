@@ -13,7 +13,7 @@ class PipeParser:
     def __init__(self):
         self.var_parser = vp.VarParser()
         # имена наличествующих команд
-        self.commands = ['wc', 'echo', 'cat', 'pwd', 'exit', 'ls', 'cd']
+        self.__commands = ['wc', 'echo', 'cat', 'pwd', 'exit', 'ls', 'cd']
 
     def parse(self, command, input_stream):
         """
@@ -23,7 +23,7 @@ class PipeParser:
         """
         command = self.var_parser.set_values(command)
         command_name = command[0].text
-        if command_name in self.commands:
+        if command_name in self.__commands:
 
             if command_name == 'echo':
                 new_command = Command.Echo(command[1:], input_stream)
